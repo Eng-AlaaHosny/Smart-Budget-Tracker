@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
+    <link rel="stylesheet" href="./style.css">
+    <title>Smart Budget Tracker</title>
+</head>
+<style>
+    * {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #6d5dfc, #4bb3fd);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+.main-container {
+    text-align: center;
+    width: 100%;
+    max-width: 450px;
+    background-color: white;
+    border-radius: 12px;
+    padding: 40px 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+h1 {
+    font-size: 28px;
+    color: #4bb3fd;
+    margin-bottom: 10px;
+}
+
+.user-button {
+    padding: 10px 20px;
+    background-color: #4bb3fd;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.user-button:hover {
+    background-color: #399fdc;
+}
+
+.log-out {
+    background-color: #6d5dfc;
+}
+
+.log-out:hover {
+    background-color: #5742dc;
+}
+
+.calendar-chart {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.calendar,
+.chart {
+    width: 48%;
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.calendar:hover,
+.chart:hover {
+    transform: translateY(-5px);
+}
+
+.bubbles {
+    display: flex;
+    justify-content: space-around;
+    margin: 0;
+}
+
+.bubble {
+    width: 120px;
+    height: 120px;
+    background-color: #6d5dfc;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    gap: 0px;
+}
+
+.bubble p {
+    margin: 0;
+}
+
+.bubble:hover {
+    background-color: #5742dc;
+    transform: scale(1.1);
+}
+
+.categories {
+    margin-top: 30px;
+}
+
+.category-container {
+    display: flex;
+    justify-content: space-between;
+    background-color: #f1f1f1;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.category-container:hover {
+    transform: translateX(10px);
+}
+
+.add-button {
+    background-color: #8ea0ba;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 32px;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+}
+
+.add-button:hover {
+    background-color: #8ec2e7;
+}
+
+/* Income Modal */
+#income-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+#income-modal .modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+#income-modal input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+}
+
+#income-modal button {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    background-color: #6d5dfc;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#income-modal button:hover {
+    background-color: #5742dc;
+}
+
+.income-button:hover {
+    background-color: #ff6f6f;
+}
+
+/* Modal styles for Income */
+#income-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+#income-modal div {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 320px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+#income-modal input,
+#income-modal button {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+}
+
+#income-modal button {
+    background-color: #6d5dfc;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#income-modal button:hover {
+    background-color: #5742dc;
+}
+
+
+
+/* Modal styles */
+#modal,
+#category-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+#modal div,
+#category-modal div {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 320px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+#modal input,
+#modal select,
+#modal button,
+#category-modal button {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+}
+
+#modal button,
+#category-modal button {
+    background-color: #6d5dfc;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#modal button:hover,
+#category-modal button:hover {
+    background-color: #5742dc;
+}
+
+.delete-button {
+    background-color: #e57373;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.delete-button:hover {
+    background-color: #d32f2f;
+}
+
+/* Income Modal */
+#income-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+#income-modal .modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+#income-modal input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+}
+
+#income-modal button {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    background-color: #6d5dfc;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#income-modal button:hover {
+    background-color: #5742dc;
+}
+
+.income-button {
+    background-color: #6d5dfc;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    bottom: 100px;
+    right: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.income-button:hover {
+    background-color: #ff6f6f;
+}
+
+#daily-chart-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+#daily-chart-modal .modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 600px;
+}
+
+canvas {
+    margin: 20px 0;
+    width: 100%;
+    max-height: 300px;
+}
+
+</style>
+<body>
+    <div class="main-container">
+        <header>
+            <form action='/users/logout' method="POST">
+                <h1>Smart Budget Tracker</h1>
+                <button class="user-button">User Page</button>
+                <button class="user-button log-out" type="submit">Log Out</button>
+            </form>
+        </header>
+
+        <div class="calendar-chart">
+            <div class="calendar">
+                <h3>Daily Spending Overview</h3>
+                <button class="user-button" onclick="viewDailyChart()">View Daily Chart</button>
+            </div>
+            <div class="chart">
+                <h3>Categories Spending Insight</h3>
+                <button class="user-button" onclick="viewCategoryChart()">View Spending Chart</button>
+            </div>
+        </div>
+
+        <!-- Popup Modal for Daily Chart -->
+        <div id="daily-chart-modal" style="display: none;">
+            <div class="modal-content">
+                <h3>Select Month to View Chart</h3>
+                <select id="daily-month-selector">
+                    <option value="" disabled selected>Select a Month</option>
+                    <option value="01">January</option>
+                    <option value="02">February</option>
+                    <option value="03">March</option>
+                    <option value="04">April</option>
+                    <option value="05">May</option>
+                    <option value="06">June</option>
+                    <option value="07">July</option>
+                    <option value="08">August</option>
+                    <option value="09">September</option>
+                    <option value="10">October</option>
+                    <option value="11">November</option>
+                    <option value="12">December</option>
+                </select>
+                <canvas id="daily-spending-chart"></canvas>
+                <button class="user-button" onclick="closeDailyChart()">Close</button>
+            </div>
+        </div>
+
+        <!-- Popup Modal for Category Chart -->
+        <div id="category-chart-modal" style="display: none;">
+            <div class="modal-content">
+                <h3>Select Month to View Chart</h3>
+                <select id="category-month-selector">
+                    <option value="" disabled selected>Select a Month</option>
+                    <option value="01">January</option>
+                    <option value="02">February</option>
+                    <option value="03">March</option>
+                    <option value="04">April</option>
+                    <option value="05">May</option>
+                    <option value="06">June</option>
+                    <option value="07">July</option>
+                    <option value="08">August</option>
+                    <option value="09">September</option>
+                    <option value="10">October</option>
+                    <option value="11">November</option>
+                    <option value="12">December</option>
+                </select>
+                <canvas id="category-spending-chart"></canvas>
+                <button class="user-button" onclick="closeCategoryChart()">Close</button>
+            </div>
+        </div>
+
+        <div class="bubbles">
+            <div class="bubble income">
+                <p>Income</p>
+                <p class="amount">
+                    <%= income.toFixed(2) %>
+                </p>
+            </div>
+            <div class="bubble expense">
+                <p>Expense</p>
+                <p class="amount">
+                    <%= expense.toFixed(2) %>
+                </p>
+            </div>
+            <div class="bubble total">
+                <p>Total</p>
+                <p class="amount">
+                    <%= total.toFixed(2) %>
+                </p>
+            </div>
+        </div>
+
+        <div class="categories">
+            <h3>Spending Categories 
+                <button class="add-category-button" onclick="toggleModal('category-modal')">+</button>
+            </h3>
+            <% categories.forEach((category)=> { %>
+                <div class="category-container">
+                    <div class="category">
+                        <%= category.name %>
+                    </div>
+                    <div class="amount-column">
+                        <%= category.amount.toFixed(2) %>
+                    </div>
+                    <form action="/delete-category" method="POST">
+                        <input type="hidden" name="categoryName" value="<%= category.name %>">
+                        <button class="delete-button">Delete</button>
+                    </form>
+                </div>
+                <% }) %>
+        </div>
+
+        <!-- Add Income Modal -->
+        <div id="income-modal" class="modal">
+            <div class="modal-content">
+                <h3>Enter Income</h3>
+                <form action="/add-income" method="POST">
+                    <input type="number" name="incomeAmount" placeholder="Amount" required>
+                    <button type="submit">Save</button>
+                </form>
+                <button onclick="toggleModal('income-modal')">Cancel</button>
+            </div>
+        </div>
+        <button class="income-button" onclick="toggleModal('income-modal')">+</button>
+
+        <!-- Add Expense Modal -->
+        <div id="modal" class="modal">
+            <div class="modal-content">
+                <h3>Add Entry</h3>
+                <form action="/add-expense" method="POST">
+                    <input type="number" name="amount" placeholder="Amount" required>
+                    <select name="category" required>
+                        <option value="" disabled selected>Select Category</option>
+                        <% categories.forEach((category)=> { %>
+                            <option value="<%= category.name %>">
+                                <%= category.name %>
+                            </option>
+                            <% }) %>
+                    </select>
+                    <button type="submit">Save</button>
+                </form>
+                <button onclick="toggleModal('modal')">Cancel</button>
+            </div>
+        </div>
+        <button class="add-button" onclick="toggleModal('modal')">+</button>
+
+        <!-- Add Category Modal -->
+        <div id="category-modal" class="modal">
+            <div class="modal-content">
+                <h3>Add Category</h3>
+                <form action="/add-category" method="POST">
+                    <input type="text" name="newCategory" placeholder="Category Name" required>
+                    <button type="submit">Add</button>
+                </form>
+                <button onclick="toggleModal('category-modal')">Cancel</button>
+            </div>
+        </div>
+
+        <script>
+            function toggleModal(modalId) {
+                const modal = document.getElementById(modalId);
+                modal.style.display = modal.style.display === 'flex' ? 'none' : 'flex';
+            }
+        </script>
+
+    </div>
+    <!-- Modal for Category Spending Chart -->
+    <div id="category-chart-modal"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); align-items: center; justify-content: center;">
+        <div style="background-color: white; padding: 20px; border-radius: 8px; width: 80%; max-width: 600px;">
+            <h3>Spending Per Category</h3>
+            <select id="category-month-selector">
+                <option value="">Select a Month</option>
+                <option value="1">January</option>
+                <option value="2">February</option>
+                <option value="3">March</option>
+                <option value="4">April</option>
+                <option value="5">May</option>
+                <option value="6">June</option>
+                <option value="7">July</option>
+                <option value="8">August</option>
+                <option value="9">September</option>
+                <option value="10">October</option>
+                <option value="11">November</option>
+                <option value="12">December</option>
+            </select>
+            <canvas id="category-spending-chart" width="400" height="400"></canvas>
+            <button onclick="closeCategoryChart()">Close</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+
+                let chartInstance; // Grafiği global bir değişkende saklayalım.
+                let chartInstanceForCategory;
+                async function viewDailyChart() {
+                    const modal = document.getElementById("daily-chart-modal");
+                    modal.style.display = "block";
+                    const selector = document.getElementById("daily-month-selector");
+                    const canvas = document.getElementById("daily-spending-chart").getContext('2d'); // 2D bağlam alınmalı.
+                    
+                    selector.addEventListener("change", async () => {
+                        const month = selector.value;
+                        console.log("month = ", month);
+                        const response = await fetch(`/dailyChart/${month}`);
+                        const data = await response.json();
+
+                        // Veriyi al ve doğrula
+                        const values = data.amounts.spendingData.slice(0, 31); // Sadece ilk 31 günü al
+                        const labels = Array.from({ length: 31 }, (_, i) => `Day ${i + 1}`);
+
+                        // Eski grafik varsa yok et
+                        if (chartInstance) {
+                            chartInstance.destroy();
+                        }
+
+                        // Yeni grafik oluştur
+                        chartInstance = new Chart(canvas, {
+                            type: 'bar',
+                            data: {
+                                labels,
+                                datasets: [{
+                                    label: 'Daily Spending ($)',
+                                    data: values,
+                                    backgroundColor: 'rgba(75, 123, 236, 0.7)',
+                                    borderColor: 'rgba(75, 123, 236, 1)',
+                                    borderWidth: 1,
+                                }],
+                            },
+                            options: {
+                                responsive: true,
+                                scales: {
+                                    x: { title: { display: true, text: 'Days of the Month' } },
+                                    y: { title: { display: true, text: 'Spending ($)' } },
+                                },
+                            },
+                        });
+                    });
+                }
+
+            async function viewCategoryChart() {
+                const modal = document.getElementById("category-chart-modal");
+                const selector = document.getElementById("category-month-selector");
+                const canvas = document.getElementById("category-spending-chart");
+
+                modal.style.display = "block";
+
+                selector.addEventListener("change", async () => {
+                    const month = selector.value;
+                    const response = await fetch(`/categoryChart/${month}`);
+                    const data = await response.json();
+                    console.log(data);
+                    const categories = data.amounts.map(c => c.category);
+                    const values = data.amounts.map(c => c.totalSpent);
+
+                    if (chartInstanceForCategory) {
+                        chartInstanceForCategory.destroy();
+                    }
+
+                    chartInstanceForCategory = new Chart(canvas, {
+                        type: 'doughnut',
+                        data: {
+                            labels: categories,
+                            datasets: [{
+                                label: 'Category Spending Ratio',
+                                data: values,
+                                backgroundColor: [
+                                    '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40'
+                                ],
+                            }],
+                        },
+                    });
+                    // const month = selector.value;
+                    // const response = await fetch(`/categoryChart/${month}`);
+                    // const data = await response.json();
+
+                    // const labels = data.category;
+                    // const values = data.totalSpent;
+                    // console.log(labels, values);
+                    // new Chart(canvas, {
+                    //     type: "pie",
+                    //     data: {
+                    //         labels: labels,
+                    //         datasets: [{
+                    //             data: values,
+                    //             backgroundColor: labels.map((_, i) => `hsl(${i * 30}, 70%, 60%)`),
+                    //         }]
+                    //     },
+                    //     options: {
+                    //         responsive: true,
+                    //     }
+                    // });
+                });
+            }
+
+            function closeDailyChart() {
+                document.getElementById("daily-chart-modal").style.display = "none";
+            }
+
+            function closeCategoryChart() {
+                document.getElementById("category-chart-modal").style.display = "none";
+            }
+        </script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+
+        // Modal elements
+        const categoryChartModal = document.getElementById('category-chart-modal');
+        const categoryMonthSelector = document.getElementById('category-month-selector');
+        const categoryChartCanvas = document.getElementById('category-spending-chart');
+
+        // Show the Category Spending Chart modal
+
+        document.querySelector('[onclick="viewCategoryChart()"]').addEventListener('click', () => {
+            categoryChartModal.style.display = 'flex';
+        });
+
+        // Function to show the category chart 
+        function viewCategoryChart() {
+            categoryChartModal.style.display = 'flex';
+        }
+
+        // Close the modal
+        function closeCategoryChart() {
+            categoryChartModal.style.display = 'none';
+        } -->
+
+
+        <!-- <script>
+        // Event listener for month selector
+        categoryMonthSelector.addEventListener('change', () => {
+            const selectedMonth = parseInt(categoryMonthSelector.value) - 1; // Month is 0-indexed
+            if (isNaN(selectedMonth)) return;
+
+            // Filter entries for the selected month
+            const filteredEntries = spendingEntries.filter(entry => {
+                const entryDate = new Date(entry.date);
+                return entryDate.getMonth() === selectedMonth;
+            });
+
+            // Aggregate spending by category
+            const categoryData = {};
+            filteredEntries.forEach(({ category, amount }) => {
+                if (categoryData[category]) {
+                    categoryData[category] += amount;
+                } else {
+                    categoryData[category] = amount;
+                }
+            });
+
+            // Prepare chart data
+            const labels = Object.keys(categoryData);
+            const spendingData = Object.values(categoryData);
+
+            // Destroy existing chart if any
+            if (categoryChartCanvas.chart) {
+                categoryChartCanvas.chart.destroy();
+            }
+
+            // Create a new chart
+            categoryChartCanvas.chart = new Chart(categoryChartCanvas, {
+                type: 'bar',
+                data: {
+                    labels,
+                    datasets: [{
+                        label: `Spending Per Category for Month ${selectedMonth + 1}`,
+                        data: spendingData,
+                        backgroundColor: labels.map((_, i) => `hsl(${(i * 30) % 360}, 70%, 60%)`),
+                        borderColor: "rgba(75, 123, 236, 1)",
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: true }
+                    },
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Categories'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Spending ($)'
+                            }
+                        }
+                    }
+                }
+            });
+        });
+
+
+        function updateTotals() {
+            const incomeAmount = parseFloat(document.querySelector('.income .amount').textContent) || 0;
+            let totalExpense = 0;
+
+            // Calculate total expenses based on user data
+            spendingEntries.forEach(entry => {
+                if (entry.category !== "income") {
+                    totalExpense += entry.amount;
+                }
+            });
+
+            // Update totals displayed
+            document.querySelector('.expense .amount').textContent = totalExpense.toFixed(2);
+            document.querySelector('.total .amount').textContent = (incomeAmount - totalExpense).toFixed(2);
+        }
+
+
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+    </script> -->
+
+</body>
+
+</html>
