@@ -1,8 +1,5 @@
 # Smart Budget Tracker 💰
-
-![Budget Tracker Screenshot](https://via.placeholder.com/800x400?text=Smart+Budget+Tracker+Screenshot) *(Consider adding a real screenshot later)*
-
-A powerful web application that helps you organize your spending and stay within budget by visualizing your finances through intuitive charts and analytics.
+ web application that helps you organize your spending and stay within budget by visualizing your finances through intuitive charts and analytics.
 
 ## Key Features ✨
 
@@ -31,7 +28,6 @@ We include these default categories to get you started:
 - Or sign in quickly with your Google account
 
 ### 2. Main Dashboard
-![Dashboard Features](https://via.placeholder.com/400x200?text=Dashboard+Screenshot)
 - **Daily Spending Chart**: View your daily expenditures per month
 - **Category Breakdown**: Pie charts with color-coded spending categories
 - **Monthly Summary**: Total income vs. expenses at a glance
