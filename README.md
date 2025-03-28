@@ -67,35 +67,34 @@ We include these default categories to get you started:
  Run `node server.js`
 
 Smart-Budget-Tracker/
-├── .gitignore          # Git ignore rules
-├── package.json        # Node.js project configuration
-├── package-lock.json   # Automatic npm dependency tree
-├── server.js           # Main application entry point
-├── README.md           # Project documentation (you're editing this)
+├── .gitignore                 # Git ignore rules
+├── package.json               # Node.js project configuration
+├── package-lock.json          # Automatic npm dependency tree
+├── server.js                  # Main application entry point
+├── README.md                  # Project documentation (you're editing this)
 │
-├── .vscode/            # VS Code workspace settings
-│   └── settings.json   # Editor configuration
+├── .vscode/                   # VS Code workspace settings
+│   └── settings.json          # Editor configuration
 │
-├── server/             # Backend server files
+├── server/                    # Backend server files
 │   ├── config/
-│   │   └── db.js       # Database connection configuration
+│   │   └── db.js              # Database connection configuration
 │   │
-│   ├── controller/     # Business logic
-│   │   ├── chartController.js  # Chart data handling
-│   │   ├── crud.js             # Basic CRUD operations
-│   │   ├── mainpageController.js  # Main page logic
-│   │   ├── mainpageCrud.js        # Main page CRUD
-│   │   └── userController.js      # User authentication
+│   ├── controller/            # Business logic
+│   │   ├── chartController.js # Chart data handling
+│   │   ├── crud.js            # Basic CRUD operations
+│   │   ├── mainpageController.js # Main page logic
+│   │   ├── mainpageCrud.js    # Main page CRUD
+│   │   └── userController.js  # User authentication
 │   │
-│   └── routes/         # API endpoints
-│       └── authRoutes.js  # Authentication routes
+│   └── routes/                # API endpoints
+│       └── authRoutes.js      # Authentication routes
 │
-├── view/               # Frontend templates (EJS)
-│   ├── login.ejs       # Login page template
-│   ├── mainpage.ejs    # Dashboard template
-│   └── resetPassword.ejs  # Password reset template
+├── view/                      # Frontend templates (EJS)
+│   ├── login.ejs              # Login page template
+│   ├── mainpage.ejs           # Dashboard template
+│   └── resetPassword.ejs      # Password reset template
 │
-└── style.css           # Main stylesheet
-
+└── style.css                  # Main stylesheet
 
 
