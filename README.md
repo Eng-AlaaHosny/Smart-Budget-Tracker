@@ -65,7 +65,7 @@ We include these default categories to get you started:
 4.Create a .env file (copy from .env.example if available)
 5.Start the development server:
  Run `node server.js`
-
+'''
 Smart-Budget-Tracker/
 ├── .gitignore                 # Git ignore rules
 ├── package.json               # Node.js project configuration
@@ -96,5 +96,5 @@ Smart-Budget-Tracker/
 │   └── resetPassword.ejs      # Password reset template
 │
 └── style.css                  # Main stylesheet
-
+'''
 
