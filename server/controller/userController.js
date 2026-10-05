@@ -38,12 +38,17 @@ const signupUser = async (req, res) => {
 
 const loginUser = async (req, res) => {
     try {
-        const { username, password } = req.body;
+        const username = (req.body.username || '').trim();
+        const password = (req.body.password || '').trim();
         if (!username || !password) {
             return res.status(400).send('Username and password are required.');
         }
 
-        const user = await readRecord('users', username);
+        // Allow login with either username or email
+        let user = await readRecord('users', username);
+        if (!user) {
+            user = await readRecordForGoogle('users', username);
+        }
 
         if (user && user.password == password) {
             req.session.loggedIn = true;

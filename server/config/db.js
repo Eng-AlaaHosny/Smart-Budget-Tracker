@@ -2,10 +2,11 @@ require('dotenv').config()
 const mysql = require('mysql2');
 
 const pool = mysql.createPool({
-    host: 'sql7.freesqldatabase.com',      // Database host address
-    user: 'sql7755540',           // Database user name
-    password: 'y7QkdjQl2d',           // Database password
-    database: 'sql7755540', // Database name
+    host: process.env.DB_HOST || '127.0.0.1',
+    user: process.env.DB_USER || 'root',
+    password: process.env.DB_PASSWORD || 'rootpassword',
+    database: process.env.DB_NAME || 'smart_budget',
+    port: Number(process.env.DB_PORT) || 3306,
 });
 
-module.exports = pool.promise(); // Promise-based connection usage
+module.exports = pool.promise();
