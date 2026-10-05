@@ -3,3 +3,5 @@ node_modules/
 *.log
 .DS_Store
 dist/vscode/node_modules/
+cookies.txt
+login_out.html

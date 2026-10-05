@@ -1,100 +1,111 @@
-# Smart Budget Tracker 💰
- web application that helps you organize your spending and stay within budget by visualizing your finances through intuitive charts and analytics.
+# Smart Budget Tracker
 
-## Key Features ✨
+Web app to organize spending, track income/expenses, and view finances with charts.
 
-- 📊 **Visual Spending Analysis**: Automatic calculation and visualization of your everyday spending by categories
-- 🔐 **Flexible Login**: Create your own account or sign in with Google
-- 📈 **Interactive Charts**: Daily spending trends and category breakdowns
-- ➕ **Custom Categories**: Add unlimited spending categories beyond our defaults
-- 💸 **Income/Expense Tracking**: Comprehensive financial recording system
-- 📅 **Automatic Date Tracking**: All entries are saved with date information
-- ⚖️ **Budget Health Check**: Instantly see if you're spending more than you earn
+## Features
 
-## Default Categories 🏷️
-We include these default categories to get you started:
+- Visual spending analysis by category
+- Username/password login (email login also works)
+- Optional Google login
+- Interactive charts (daily spending + category breakdown)
+- Custom categories
+- Income/expense tracking with automatic dates
+- Budget health (income vs expenses)
+
+## Default Categories
+
 - Housing
 - Utilities
-- Groceries
+- Food & Groceries
 - Transportation
 - Entertainment
-- Healthcare
-- *(you can Add others here)*
 
-## How It Works 🛠️
+You can add more from the dashboard.
 
-### 1. Login Page
-- Create your personal username/password
-- Or sign in quickly with your Google account
+## Prerequisites
 
-### 2. Main Dashboard
-- **Daily Spending Chart**: View your daily expenditures per month
-- **Category Breakdown**: Pie charts with color-coded spending categories
-- **Monthly Summary**: Total income vs. expenses at a glance
-- **Quick Add Buttons**:
-  - Big gray button: Add new expenses
-  - Small button: Record income/salary
+- [Node.js](https://nodejs.org/) v14+
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/) (for MySQL)
 
-### 3. Adding Transactions
-- **Expenses**:
-  - Select category from dropdown
-  - Enter amount and details
-  - System automatically records date
-- **Income**:
-  - Simple form for salary/other income
-  - Contributes to your monthly total
+Google OAuth credentials are optional (only needed for Google login / password-reset emails).
 
-### 4. Financial Insights
-- **Spending Alerts**: Visual indicators when approaching budget limits
-- **Savings Calculator**: Automatically shows monthly surplus/deficit
-- **Trend Analysis**: Compare months to improve spending habits
+## First-time setup (teammates)
 
+From the project root:
 
+```bash
+# 1) Install dependencies + create .env from the example
+npm run setup
 
+# 2) Start MySQL (creates tables automatically on first run)
+npm run db:up
 
-## Installation
+# 3) Wait ~10–20 seconds for MySQL to become ready, then start the app
+npm start
+```
 
-### Prerequisites
-- Node.js v14+
-- MongoDB Atlas account or local MongoDB instance
-- Google OAuth credentials (if using Google login)
+Open: [http://localhost:3000](http://localhost:3000)
 
-1. Clone the repository: git clone https://github.com/Eng-AlaaHosny/Smart-Budget-Tracker
-2. Run `npm install`
-3. Configure your database in `server/config/db.js`
-4.Create a .env file (copy from .env.example if available)
-5.Start the development server:
- Run `node server.js`
+Sign up with a new username/email/password, then log in.
+
+### Useful commands
+
+| Command | What it does |
+|---------|----------------|
+| `npm run setup` | `npm install` + copy `.env.example` → `.env` if missing |
+| `npm run db:up` | Start MySQL with Docker Compose |
+| `npm run db:down` | Stop MySQL |
+| `npm start` | Run the app |
+| `npm run dev` | Run the app with auto-reload (nodemon) |
+
+### Manual alternative
+
+```bash
+cp .env.example .env   # Windows: copy .env.example .env
+npm install
+docker compose up -d
+npm start
+```
+
+Default DB settings (already in `.env.example`):
+
+- Host: `127.0.0.1`
+- Port: `3306`
+- User: `root`
+- Password: `rootpassword`
+- Database: `smart_budget`
+
+Do **not** commit your real `.env` file.
+
+## After reboot / next day
+
+```bash
+npm run db:up
+npm start
+```
+
+## Project structure
+
 ```
 Smart-Budget-Tracker/
-├── .gitignore                 # Git ignore rules
-├── package.json               # Node.js project configuration
-├── package-lock.json          # Automatic npm dependency tree
-├── server.js                  # Main application entry point
-├── README.md                  # Project documentation (you're editing this)
-│
-├── .vscode/                   # VS Code workspace settings
-│   └── settings.json          # Editor configuration
-│
-├── server/                    # Backend server files
-│   ├── config/
-│   │   └── db.js              # Database connection configuration
-│   │
-│   ├── controller/            # Business logic
-│   │   ├── chartController.js # Chart data handling
-│   │   ├── crud.js            # Basic CRUD operations
-│   │   ├── mainpageController.js # Main page logic
-│   │   ├── mainpageCrud.js    # Main page CRUD
-│   │   └── userController.js  # User authentication
-│   │
-│   └── routes/                # API endpoints
-│       └── authRoutes.js      # Authentication routes
-│
-├── view/                      # Frontend templates (EJS)
-│   ├── login.ejs              # Login page template
-│   ├── mainpage.ejs           # Dashboard template
-│   └── resetPassword.ejs      # Password reset template
-│
-└── style.css                  # Main stylesheet
-'''
+├── server.js                 # App entry point
+├── package.json
+├── docker-compose.yml        # Local MySQL
+├── schema.sql                # Database tables
+├── .env.example              # Env template
+├── style.css
+├── server/
+│   ├── config/db.js          # MySQL connection
+│   ├── controller/           # Business logic
+│   └── routes/authRoutes.js
+└── view/                     # EJS templates
+    ├── login.ejs
+    ├── mainpage.ejs
+    └── resetPassword.ejs
+```
 
+## Notes
+
+- Login accepts **username or email**.
+- Google login / forgot-password email need valid values in `.env` (`CLIENT_ID`, `CLIENT_SECRET`, `REDIRECT_URI`, `GOOGLE`).
+- If port `3306` is already in use, stop the other MySQL service or change the port mapping in `docker-compose.yml` and `DB_PORT` in `.env`.
